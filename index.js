@@ -193,7 +193,49 @@ function arrayAvg(array) {
 	return [(a1/array.length).toFixed(2), (a2/array.length).toFixed(2)];
 }
 
-calculate(peter, james, 21, 2, [3, 17, 3], [1, 1, 0]);
+/*
+william:
+points won off serve: 2
+serve points won: 4
+points: 8
+aces: 0
+faults: 0
+sus points: 1
+
+
+Peter: wins toss
+points won off serve: 4
+serve points won: 6
+points: 11
+aces: 0
+faults: 1
+
+11/6/24
+*/
+
+calculate(peter, william, 11, 8, [1, 6, 0], [0, 4, 0]);
+
+/*
+james:
+points won off serve: 0
+serve points won: 4
+points: 7
+aces: 0
+faults: 1
+sus points: 0
+
+
+Peter: wins toss
+points won off serve: 2
+serve points won: 7
+points: 11
+aces: 0
+faults: 0
+
+11/6/24
+*/
+
+calculate(peter, james, 11, 7, [0, 7, 0], [1, 4, 0]);
 
 
 var page = document.currentScript.getAttribute("page");
