@@ -1,0 +1,53 @@
+body {
+	background: #222222;
+	margin: 0;
+	padding: 0;
+}
+
+table {
+	height: 40%;
+	left: 10%;
+	margin: 120px auto;
+	overflow-y: scroll;
+	position: static;
+	width: 70%
+}
+
+tr {
+	background: #f4f7f8;
+	border-bottom: 1px solid #FFF;
+	margin-bottom: 5px;
+}
+
+td, th {
+	font-family: 'Lato', sans-serif;
+	font-weight: 200;
+	font-size: 30px;
+	padding: 12px;
+	text-align: center;
+}
+
+.title {
+	text-align: center;
+	font-family: 'Lato', sans-serif;
+	color: black;
+}
+
+.title-bar {
+	box-sizing: border-box;
+	background-color: #f4f7f8;
+	overflow: auto;
+	padding: 18px 50px;
+	position: relative;
+	top: 0;
+	width: 100%;
+	z-index: 999;
+}
+
+.name-cell {
+	width: 10%;
+}
+
+.value-cell {
+	width: 20%;
+}
