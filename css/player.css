@@ -38,10 +38,10 @@ td, th {
 	background-color: #f4f7f8;
 	overflow: auto;
 	padding: 18px 50px;
-	position: relative;
+	position: absolute;
 	top: 0;
 	width: 100%;
-	z-index: 999;
+	z-index: 1;
 }
 
 .name-cell {
@@ -50,4 +50,17 @@ td, th {
 
 .value-cell {
 	width: 20%;
+}
+
+.icon {
+	width: 116px;
+	height: 116px;
+	margin-left: 0px;
+	margin-top: 0px;
+	padding: 0px;
+	float: left;
+	display: block;
+	position: absolute;
+	top: 0px;
+	z-index: 2;
 }

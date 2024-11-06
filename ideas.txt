@@ -1,2 +1,2 @@
-fill out per person stats
 make boxes colored depending on whether its above average or below average
+put picture of the ping pong room in the background

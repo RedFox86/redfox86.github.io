@@ -2,6 +2,8 @@ h1 {
 	font-family: 'Lato', sans-serif;
 	font-weight: 400;
 	color: white;
+	padding: 30px;
+	margin: 0px;
 	text-align: center;
 }
 
@@ -11,6 +13,16 @@ h1 {
 	text-align: center;
 	width: 2%;
 	font-size: 20px;
+}
+
+.icon {
+	width: 116px;
+	height: 116px;
+	margin-left: 0px;
+	margin-top: 0px;
+	padding: 0px;
+	float: left;
+	display: block
 }
 
 .name-cell {
@@ -41,7 +53,7 @@ h1 {
     font-size: 20px;
 }
 
-body {
+html, body {
 	background: #222222;
 	margin: 0;
 	padding: 0;
