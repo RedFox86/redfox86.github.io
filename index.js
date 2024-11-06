@@ -16,6 +16,8 @@ var david = {rank: "???", name: "David Tawfik", elo: 1000, url: "david", highest
 
 var people = [peter, mathew, tyler, william, james, luke, david];
 
+var colors = ["#047824", "#44ce1b", "#bbdb44", "#f7e379", "#f2a134", "#e51f1f", "#8b0000"];
+
 function negpos(num) {
 	if (num > 0) {
 		return 1;
@@ -43,7 +45,7 @@ function calcChangeB(P1, P2, T1, T2, X) {
 		(P2/P1) * (P1 * T2 - P2 * T1)
 	))
 }
-function calculate(P1, P2, T1, T2) {
+function calculate(P1, P2, T1, T2, P1S, P2S) {
 	var change1 = calcChangeA(P1.elo, P2.elo, T1, T2, P1.elo);
 	var change2 = calcChangeB(P1.elo, P2.elo, T1, T2, P2.elo);
 	if (change1 > 200) {
@@ -115,6 +117,21 @@ function calculate(P1, P2, T1, T2) {
 	P2.stat.elo.push(P2.elo);
 	P1.stat.rank.push(P1.rank);
 	P2.stat.rank.push(P2.rank);
+
+	P1.faults += P1S[0];
+    P2.faults += P2S[0];
+    P1.spw += P1S[1];
+    P2.spw += P2S[1];
+	P1.aces += P1S[2];
+	P2.aces += P2S[2];
+
+
+	updateRecent(P1.stat.faults, P1S[0]);
+	updateRecent(P2.stat.faults, P2S[0]);
+	updateRecent(P1.stat.spw, P1S[1]);
+	updateRecent(P2.stat.spw, P2S[1]);
+	updateRecent(P1.stat.aces, P1S[2]);
+	updateRecent(P2.stat.aces, P2S[2]);
 }
 
 function updateRecent(array, value) {
@@ -176,39 +193,13 @@ function arrayAvg(array) {
 	return [(a1/array.length).toFixed(2), (a2/array.length).toFixed(2)];
 }
 
-calculate(peter, james, 21, 2);
-calculate(peter, james, 21, 4);
-calculate(peter, william, 21, 11);
-calculate(mathew, tyler, 33, 18);
-calculate(tyler, peter, 11, 9);
-calculate(peter, tyler, 11, 5);
-calculate(peter, david, 21, 5);
-calculate(peter, david, 11, 2);
-calculate(david, peter, 11, 8);
-calculate(mathew, peter, 11, 8);
-calculate(tyler, david, 9, 4);
-calculate(william, david, 11, 2);
-calculate(james, mathew, 13, 11);
-calculate(peter, william, 11, 8);
-calculate(tyler, william, 11, 9);
-calculate(tyler, peter, 11, 8);
-calculate(peter, william, 11, 2);
-calculate(peter, william, 11, 8);
-calculate(peter, james, 11, 4);
-calculate(peter, william, 11, 7);
-calculate(peter, james, 4, 11);
-calculate(peter, james, 4, 11);
-calculate(peter, james, 4, 11);
-calculate(peter, james, 4, 11);
-calculate(peter, james, 11, 4);
-calculate(peter, james, 11, 4);
-calculate(peter, james, 11, 4);
-calculate(peter, james, 11, 4);
-calculate(peter, james, 11, 4);
-calculate(peter, james, 11, 4);
+calculate(peter, james, 21, 2, [3, 17, 3], [1, 1, 0]);
 
-var page = document.currentScript.getAttribute("page")
+
+var page = document.currentScript.getAttribute("page");
 var player = null;
+var avg = [];
+var index = null;
 
 if (page === "index") {
 	people.forEach(person => {
@@ -254,4 +245,195 @@ if (page === "index") {
 	document.getElementById("recentVictory").innerText = arrayDiff(player.stat.victory);
 	document.getElementById("allTimeVictory").innerText = player.victory;
 	document.getElementById("averageVictory").innerText = arrayAvg(player.stat.victories);
+
+	people.forEach(person => {
+		avg.push(arraySum(person.stat.wins));
+	});
+	avg.sort((a, b) => b - a);
+	index = avg.indexOf(arraySum(player.stat.wins));
+	document.getElementById("recentWins").style.backgroundColor = colors[index];
+
+	avg = [];
+	people.forEach(person => {
+		avg.push(person.wins);
+	});
+	avg.sort((a, b) => b - a);
+	index = avg.indexOf(player.wins);
+	document.getElementById("allTimeWins").style.backgroundColor = colors[index];
+
+	avg = [];
+	people.forEach(person => {
+		avg.push((person.wins / person.losses));
+	});
+	avg.sort((a, b) => b - a);
+	index = avg.indexOf((player.wins / player.losses));
+	document.getElementById("averageWins").style.backgroundColor = colors[index];
+
+	avg = [];
+	people.forEach(person => {
+		avg.push(7 - arraySum(person.stat.wins));
+	});
+	avg.sort((a, b) => a - b);
+	index = avg.indexOf(7 - arraySum(player.stat.wins));
+	document.getElementById("recentLosses").style.backgroundColor = colors[index];
+
+	avg = [];
+	people.forEach(person => {
+		avg.push(person.losses);
+	});
+	avg.sort((a, b) => a - b);
+	index = avg.indexOf(player.losses);
+	document.getElementById("allTimeLosses").style.backgroundColor = colors[index];
+
+	avg = [];
+	people.forEach(person => {
+		avg.push((person.wins / person.losses));
+	});
+	avg.sort((a, b) => a - b);
+	index = avg.indexOf((player.wins / player.losses));
+	document.getElementById("averageLosses").style.backgroundColor = colors[index];
+
+	avg = [];
+	people.forEach(person => {
+		avg.push(arrayMax(person.stat.peak_elo));
+	});
+	avg.sort((a, b) => b - a);
+	index = avg.indexOf(arrayMax(player.stat.peak_elo));
+	document.getElementById("recentPeakElo").style.backgroundColor = colors[index];
+
+	avg = [];
+	people.forEach(person => {
+		avg.push(person.peak_elo);
+	});
+	avg.sort((a, b) => b - a);
+	index = avg.indexOf(player.peak_elo);
+	document.getElementById("allTimePeakElo").style.backgroundColor = colors[index];
+
+	avg = [];
+	people.forEach(person => {
+		avg.push((arraySum(person.stat.elo) / person.stat.elo.length));
+	});
+	avg.sort((a, b) => b - a);
+	index = avg.indexOf((arraySum(player.stat.elo) / player.stat.elo.length));
+	document.getElementById("averagePeakElo").style.backgroundColor = colors[index];
+
+	avg = [];
+	people.forEach(person => {
+		avg.push(arrayMin(person.stat.highest_rank));
+	});
+	avg.sort((a, b) => a - b);
+	index = avg.indexOf(arrayMin(player.stat.highest_rank));
+	document.getElementById("recentHighestRank").style.backgroundColor = colors[index];
+
+	avg = [];
+	people.forEach(person => {
+		avg.push(person.highest_rank);
+	});
+	avg.sort((a, b) => a - b);
+	index = avg.indexOf(player.highest_rank);
+	document.getElementById("allTimeHighestRank").style.backgroundColor = colors[index];
+
+	avg = [];
+	people.forEach(person => {
+		avg.push((arraySum(person.stat.rank) / person.stat.rank.length));
+	});
+	avg.sort((a, b) => a - b);
+	index = avg.indexOf((arraySum(player.stat.rank) / player.stat.rank.length));
+	document.getElementById("averageHighestRank").style.backgroundColor = colors[index];
+
+	avg = [];
+	people.forEach(person => {
+		avg.push(arraySum(person.stat.faults));
+	});
+	avg.sort((a, b) => a - b);
+	index = avg.indexOf(arraySum(player.stat.faults));
+	document.getElementById("recentFaults").style.backgroundColor = colors[index];
+
+	avg = [];
+	people.forEach(person => {
+		avg.push(person.faults);
+	});
+	avg.sort((a, b) => a - b);
+	index = avg.indexOf(player.faults);
+	document.getElementById("allTimeFaults").style.backgroundColor = colors[index];
+
+	avg = [];
+	people.forEach(person => {
+		avg.push(person.faults / (person.wins+player.losses));
+	});
+	avg.sort((a, b) => a - b);
+	index = avg.indexOf(player.faults / (player.wins+player.losses));
+	document.getElementById("averageFaults").style.backgroundColor = colors[index];
+
+	avg = [];
+	people.forEach(person => {
+		avg.push(arraySum(person.stat.spw));
+	});
+	avg.sort((a, b) => b - a);
+	index = avg.indexOf(arraySum(player.stat.spw));
+	document.getElementById("recentServePointsWon").style.backgroundColor = colors[index];
+
+	avg = [];
+	people.forEach(person => {
+		avg.push(person.spw);
+	});
+	avg.sort((a, b) => b - a);
+	index = avg.indexOf(player.spw);
+	document.getElementById("allTimeServePointsWon").style.backgroundColor = colors[index];
+
+	avg = [];
+	people.forEach(person => {
+		avg.push(person.spw / (player.wins+player.losses));
+	});
+	avg.sort((a, b) => b - a);
+	index = avg.indexOf(player.spw / (player.wins+player.losses));
+	document.getElementById("averageServePointsWon").style.backgroundColor = colors[index];
+
+	avg = [];
+	people.forEach(person => {
+		avg.push(arraySum(person.stat.aces));
+	});
+	avg.sort((a, b) => b - a);
+	index = avg.indexOf(arraySum(player.stat.aces));
+	document.getElementById("recentAces").style.backgroundColor = colors[index];
+
+	avg = [];
+	people.forEach(person => {
+		avg.push(person.aces);
+	});
+	avg.sort((a, b) => b - a);
+	index = avg.indexOf(player.aces);
+	document.getElementById("allTimeAces").style.backgroundColor = colors[index];
+
+	avg = [];
+	people.forEach(person => {
+		avg.push(person.aces / (player.wins+player.losses));
+	});
+	avg.sort((a, b) => b - a);
+	index = avg.indexOf(player.aces / (player.wins+player.losses));
+	document.getElementById("averageAces").style.backgroundColor = colors[index];
+
+//	avg = [];
+//	people.forEach(person => {
+//		avg.push(arrayDiff(person.stat.victory));
+//	});
+//	avg.sort((a, b) => b - a);
+//	index = avg.indexOf(arrayDiff(player.stat.victory));
+//	document.getElementById("recentVictory").style.backgroundColor = colors[index];
+//
+//	avg = [];
+//	people.forEach(person => {
+//		avg.push(person.victory);
+//	});
+//	avg.sort((a, b) => b - a);
+//	index = avg.indexOf(player.victory);
+//	document.getElementById("allTimeVictory").style.backgroundColor = colors[index];
+//
+//	avg = [];
+//	people.forEach(person => {
+//		avg.push(arrayAvg(person.stat.victories););
+//	});
+//	avg.sort((a, b) => b - a);
+//	index = avg.indexOf(arrayAvg(player.stat.victories););
+//	document.getElementById("averageVictory").style.backgroundColor = colors[index];
 }

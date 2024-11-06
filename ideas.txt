@@ -1,2 +1,4 @@
-make boxes colored depending on whether its above average or below average
+make boxes colored depending on whether its above average or below average (done)
 put picture of the ping pong room in the background
+add suckers serve % statistic
+add time as #1
