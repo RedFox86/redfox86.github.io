@@ -4,7 +4,7 @@ var statTyler = {wins: [], peak_elo: [], highest_rank: [], faults: [], spw: [], 
 var statWilliam = {wins: [], peak_elo: [], highest_rank: [], faults: [], spw: [], aces: [], victory: [], elo: [], rank: [], victories: []};
 var statJames = {wins: [], peak_elo: [], highest_rank: [], faults: [], spw: [], aces: [], victory: [], elo: [], rank: [], victories: []};
 var statLuke = {wins: [], peak_elo: [], highest_rank: [], faults: [], spw: [], aces: [], victory: [], elo: [], rank: [], victories: []};
-var statDavid = {wins: [], peak_elo: [], highest_rank: [], faults: [], spw: [], aces: [], victory: [], elo: [], rank: [], victories: []};
+var statNikki = {wins: [], peak_elo: [], highest_rank: [], faults: [], spw: [], aces: [], victory: [], elo: [], rank: [], victories: []};
 
 var peter = {rank: "???", name: "Peter Langendorf", elo: 1000, url: "peter", highest_rank: "???", wins: 0, losses: 0, peak_elo: 1000, faults : 0, spw : 0, aces : 0, victory : [0, 1], stat : statPeter};
 var mathew = {rank: "???", name: "Mathew Ala", elo: 1000, url: "mathew", highest_rank: "???", wins: 0, losses: 0, peak_elo: 1000, faults : 0, spw : 0, aces : 0, victory : [0, 1], stat : statMathew};
@@ -12,20 +12,21 @@ var tyler = {rank: "???", name: "Tyler Cummins", elo: 1000, url: "tyler", highes
 var william = {rank: "???", name: "William Mondello", elo: 1000, url: "william", highest_rank: "???", wins: 0, losses: 0, peak_elo: 1000, faults : 0, spw : 0, aces : 0, victory : [0, 1], stat : statWilliam};
 var james = {rank: "???", name: "James Aloi", elo: 1000, url: "james", highest_rank: "???", wins: 0, losses: 0, peak_elo: 1000, faults : 0, spw : 0, aces : 0, victory : [0, 1], stat : statJames};
 var luke = {rank: "???", name: "Luke Pilaud", elo: 1000, url: "luke", highest_rank: "???", wins: 0, losses: 0, peak_elo: 1000, faults : 0, spw : 0, aces : 0, victory : [0, 1], stat : statLuke};
-var david = {rank: "???", name: "David Tawfik", elo: 1000, url: "david", highest_rank: "???", wins: 0, losses: 0, peak_elo: 1000, faults : 0, spw : 0, aces : 0, victory : [0, 1], stat : statDavid};
+var nikki = {rank: "???", name: "Nikki", elo: 1000, url: "nikki", highest_rank: "???", wins: 0, losses: 0, peak_elo: 1000, faults : 0, spw : 0, aces : 0, victory : [0, 1], stat : statNikki};
 
-var people = [peter, mathew, tyler, william, james, luke, david];
+var people = [peter, mathew, tyler, william, james, luke, nikki];
 
 var colors = ["#047824", "#44ce1b", "#bbdb44", "#f7e379", "#f2a134", "#e51f1f", "#8b0000"];
+
+var recentGames = [];
 
 function negpos(num) {
 	if (num > 0) {
 		return 1;
 	} else if (num < 0) {
 		return -1;
-	} else {
-		return 0;
 	}
+	return 0;
 }
 function getTeamAverage(elo1, elo2) {
 	return (elo1+elo2) / 2;
@@ -45,7 +46,7 @@ function calcChangeB(P1, P2, T1, T2, X) {
 		(P2/P1) * (P1 * T2 - P2 * T1)
 	))
 }
-function calculate(P1, P2, T1, T2, P1S, P2S) {
+function calculate(P1, P2, T1, T2, P1S, P2S, gameName) {
 	var change1 = calcChangeA(P1.elo, P2.elo, T1, T2, P1.elo);
 	var change2 = calcChangeB(P1.elo, P2.elo, T1, T2, P2.elo);
 	if (change1 > 200) {
@@ -132,6 +133,8 @@ function calculate(P1, P2, T1, T2, P1S, P2S) {
 	updateRecent(P2.stat.spw, P2S[1]);
 	updateRecent(P1.stat.aces, P1S[2]);
 	updateRecent(P2.stat.aces, P2S[2]);
+
+	updateRecent(recentGames, [P1, P2, T1, T2, P1S, P2S, gameName]);
 }
 
 function updateRecent(array, value) {
@@ -213,7 +216,7 @@ faults: 1
 11/6/24
 */
 
-calculate(peter, william, 11, 8, [1, 6, 0], [0, 4, 0]);
+calculate(peter, william, 11, 8, [1, 6, 0], [0, 4, 0], "lang.mond.11.6.24");
 
 /*
 james:
@@ -235,8 +238,95 @@ faults: 0
 11/6/24
 */
 
-calculate(peter, james, 11, 7, [0, 7, 0], [1, 4, 0]);
+calculate(peter, james, 11, 7, [0, 7, 0], [1, 4, 0], "lang.aloi.11.6.24");
 
+/*
+William: wins toss
+points won off serve: 2
+serve points won: 2
+points: 3
+aces: 0
+faults: 0
+sus points: 1
+
+
+Peter:
+points won off serve: 3
+serve points won: 8
+points: 11
+aces: 0
+faults: 0
+
+11/6/24
+*/
+
+calculate(peter, william, 11, 3, [0, 8, 0], [0, 2, 0], "lang.mond.11.7.24");
+
+/*
+James: wins toss
+points won off serve: 0
+serve points won: 1
+points: 3
+aces: 0
+faults: 0
+sus points: 0
+
+
+Peter:
+points won off serve: 2
+serve points won: 7
+points: 11
+aces: 0
+faults: 0
+
+11/6/24
+*/
+
+calculate(peter, james, 11, 3, [0, 7, 0], [0, 1, 0], "lang.aloi.11.7.24");
+
+/*
+Nikki: 
+points won off serve: 0
+serve points won: 1
+points: 2
+aces: 0
+faults: 0
+sus points: 0
+
+
+Peter: wins toss
+points won off serve: 0
+serve points won: 9
+points: 11
+aces: 0
+faults: 0
+
+11/6/24
+*/
+
+calculate(peter, nikki, 11, 2, [0, 9, 0], [0, 1, 0], "lang.nikki.11.7.24");
+
+/*
+Luke: 
+points won off serve: 0
+serve points won: 0
+points: 0
+aces: 0
+faults: 0
+ussr points: 0
+
+
+Peter: wins toss
+points won off serve: 2
+serve points won: 10
+points: 11
+aces: 0
+faults: 0
+
+11/6/24
+*/
+
+calculate(peter, luke, 11, 0, [0, 10, 0], [0, 0, 0], "lang.luke.11.7.24");
 
 var page = document.currentScript.getAttribute("page");
 var player = null;
@@ -249,6 +339,8 @@ if (page === "index") {
 		document.getElementById("name" + person.rank).href = "people/" +person.url+".html";
 		document.getElementById("elo" + person.rank).innerText = person.elo;
 	});
+
+	document.getElementById("gamearchive1").innerText = recentGames[0][6];
 } else {
 	people.forEach(person => {
 		if (page == person.url) {

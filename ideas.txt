@@ -3,3 +3,5 @@ put picture of the ping pong room in the background
 add suckers serve % statistic
 add time as #1
 keep track of toss
+
+use sessionStorage.setItem('key', 'value'); to save archive clicked variable.
