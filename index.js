@@ -4,7 +4,7 @@ var statTyler = {wins: [], peak_elo: [], highest_rank: [], faults: [], spw: [], 
 var statWilliam = {wins: [], peak_elo: [], highest_rank: [], faults: [], spw: [], aces: [], victory: [], elo: [], rank: [], victories: []};
 var statJames = {wins: [], peak_elo: [], highest_rank: [], faults: [], spw: [], aces: [], victory: [], elo: [], rank: [], victories: []};
 var statLuke = {wins: [], peak_elo: [], highest_rank: [], faults: [], spw: [], aces: [], victory: [], elo: [], rank: [], victories: []};
-var statNikki = {wins: [], peak_elo: [], highest_rank: [], faults: [], spw: [], aces: [], victory: [], elo: [], rank: [], victories: []};
+var statNicky = {wins: [], peak_elo: [], highest_rank: [], faults: [], spw: [], aces: [], victory: [], elo: [], rank: [], victories: []};
 
 var peter = {rank: "???", name: "Peter Langendorf", elo: 1000, url: "peter", highest_rank: "???", wins: 0, losses: 0, peak_elo: 1000, faults : 0, spw : 0, aces : 0, victory : [0, 1], stat : statPeter};
 var mathew = {rank: "???", name: "Mathew Ala", elo: 1000, url: "mathew", highest_rank: "???", wins: 0, losses: 0, peak_elo: 1000, faults : 0, spw : 0, aces : 0, victory : [0, 1], stat : statMathew};
@@ -12,11 +12,11 @@ var tyler = {rank: "???", name: "Tyler Cummins", elo: 1000, url: "tyler", highes
 var william = {rank: "???", name: "William Mondello", elo: 1000, url: "william", highest_rank: "???", wins: 0, losses: 0, peak_elo: 1000, faults : 0, spw : 0, aces : 0, victory : [0, 1], stat : statWilliam};
 var james = {rank: "???", name: "James Aloi", elo: 1000, url: "james", highest_rank: "???", wins: 0, losses: 0, peak_elo: 1000, faults : 0, spw : 0, aces : 0, victory : [0, 1], stat : statJames};
 var luke = {rank: "???", name: "Luke Pilaud", elo: 1000, url: "luke", highest_rank: "???", wins: 0, losses: 0, peak_elo: 1000, faults : 0, spw : 0, aces : 0, victory : [0, 1], stat : statLuke};
-var nikki = {rank: "???", name: "Nikki", elo: 1000, url: "nikki", highest_rank: "???", wins: 0, losses: 0, peak_elo: 1000, faults : 0, spw : 0, aces : 0, victory : [0, 1], stat : statNikki};
+var nicky = {rank: "???", name: "Nicky", elo: 1000, url: "Nicky", highest_rank: "???", wins: 0, losses: 0, peak_elo: 1000, faults : 0, spw : 0, aces : 0, victory : [0, 1], stat : statNicky};
 
-var people = [peter, mathew, tyler, william, james, luke, nikki];
+var people = [peter, mathew, tyler, william, james, luke, nicky];
 
-var colors = ["#047824", "#44ce1b", "#bbdb44", "#f7e379", "#f2a134", "#e51f1f", "#8b0000"];
+const colors = ["#047824", "#44ce1b", "#bbdb44", "#f7e379", "#f2a134", "#e51f1f", "#8b0000"];
 
 var recentGames = [];
 
@@ -285,7 +285,7 @@ faults: 0
 calculate(peter, james, 11, 3, [0, 7, 0], [0, 1, 0], "lang.aloi.11.7.24");
 
 /*
-Nikki: 
+Nicky: 
 points won off serve: 0
 serve points won: 1
 points: 2
@@ -304,7 +304,7 @@ faults: 0
 11/6/24
 */
 
-calculate(peter, nikki, 11, 2, [0, 9, 0], [0, 1, 0], "lang.nikki.11.7.24");
+calculate(peter, nicky, 11, 2, [0, 9, 0], [0, 1, 0], "lang.nicky.11.7.24");
 
 /*
 Luke: 
@@ -352,7 +352,7 @@ if (page === "index") {
 	document.getElementById("allTimeWins").innerText = player.wins
 	document.getElementById("averageWins").innerText = (player.wins / player.losses).toFixed(2);
 
-	document.getElementById("recentLosses").innerText = 7 - arraySum(player.stat.wins);
+	document.getElementById("recentLosses").innerText = player.stat.wins.length - arraySum(player.stat.wins);
 	document.getElementById("allTimeLosses").innerText = player.losses
 	document.getElementById("averageLosses").innerText = (player.losses / player.wins).toFixed(2);
 
@@ -405,10 +405,10 @@ if (page === "index") {
 
 	avg = [];
 	people.forEach(person => {
-		avg.push(7 - arraySum(person.stat.wins));
+		avg.push(person.stat.wins.length - arraySum(person.stat.wins));
 	});
 	avg.sort((a, b) => a - b);
-	index = avg.indexOf(7 - arraySum(player.stat.wins));
+	index = avg.indexOf(player.stat.wins.length - arraySum(player.stat.wins));
 	document.getElementById("recentLosses").style.backgroundColor = colors[index];
 
 	avg = [];
@@ -546,28 +546,4 @@ if (page === "index") {
 	avg.sort((a, b) => b - a);
 	index = avg.indexOf(player.aces / (player.wins+player.losses));
 	document.getElementById("averageAces").style.backgroundColor = colors[index];
-
-//	avg = [];
-//	people.forEach(person => {
-//		avg.push(arrayDiff(person.stat.victory));
-//	});
-//	avg.sort((a, b) => b - a);
-//	index = avg.indexOf(arrayDiff(player.stat.victory));
-//	document.getElementById("recentVictory").style.backgroundColor = colors[index];
-//
-//	avg = [];
-//	people.forEach(person => {
-//		avg.push(person.victory);
-//	});
-//	avg.sort((a, b) => b - a);
-//	index = avg.indexOf(player.victory);
-//	document.getElementById("allTimeVictory").style.backgroundColor = colors[index];
-//
-//	avg = [];
-//	people.forEach(person => {
-//		avg.push(arrayAvg(person.stat.victories););
-//	});
-//	avg.sort((a, b) => b - a);
-//	index = avg.indexOf(arrayAvg(player.stat.victories););
-//	document.getElementById("averageVictory").style.backgroundColor = colors[index];
 }
