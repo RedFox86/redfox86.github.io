@@ -328,6 +328,27 @@ faults: 0
 
 calculate(peter, luke, 11, 0, [0, 10, 0], [0, 0, 0], "lang.luke.11.7.24");
 
+/*
+Mathew: 
+points won off serve: 5
+serve points won: 11
+points: 21
+aces: 0
+faults: 1
+ussr points: 0
+
+
+Peter: wins toss
+points won off serve: 4
+serve points won: 6
+points: 14
+aces: 0
+faults: 2
+ussr points: 2
+*/
+
+calculate(mathew, peter, 21, 14, [1, 11, 0], [2, 6, 0], "lang.alla.11.18.24");
+
 var page = document.currentScript.getAttribute("page");
 var player = null;
 var avg = [];
