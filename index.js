@@ -387,11 +387,11 @@ if (page === "index") {
 
 	document.getElementById("recentFaults").innerText = arraySum(player.stat.faults);
 	document.getElementById("allTimeFaults").innerText = player.faults;
-	document.getElementById("averageFaults").innerText = player.faults / (player.wins+player.losses).toFixed(2);
+	document.getElementById("averageFaults").innerText = (player.faults / (player.wins+player.losses)).toFixed(2);
 
 	document.getElementById("recentServePointsWon").innerText = arraySum(player.stat.spw);
 	document.getElementById("allTimeServePointsWon").innerText = player.spw;
-	document.getElementById("averageServePointsWon").innerText = player.spw / (player.wins+player.losses).toFixed(2);
+	document.getElementById("averageServePointsWon").innerText = (player.spw / (player.wins+player.losses)).toFixed(2);
 
 	document.getElementById("recentAces").innerText = arraySum(player.stat.aces);
 	document.getElementById("allTimeAces").innerText = player.aces;
