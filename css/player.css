@@ -7,7 +7,7 @@ body {
 table {
 	height: 40%;
 	left: 10%;
-	margin: 120px auto;
+	margin: 170px auto;
 	overflow-y: scroll;
 	position: static;
 	width: 70%
@@ -77,6 +77,13 @@ ul {
 	text-align: center;
 	font-family: 'Lato', sans-serif;
 	color: black;
+}
+
+.quote {
+	text-align: center;
+	font-family: 'Lato', sans-serif;
+	color: gray;
+	font-style: italic;
 }
 
 .title-bar {
