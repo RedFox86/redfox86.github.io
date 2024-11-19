@@ -1,141 +1,95 @@
-var statPeter = {wins: [], peak_elo: [], highest_rank: [], faults: [], spw: [], aces: [], victory: [], elo: [], rank: [], victories: []};
-var statMathew = {wins: [], peak_elo: [], highest_rank: [], faults: [], spw: [], aces: [], victory: [], elo: [], rank: [], victories: []};
-var statTyler = {wins: [], peak_elo: [], highest_rank: [], faults: [], spw: [], aces: [], victory: [], elo: [], rank: [], victories: []};
-var statWilliam = {wins: [], peak_elo: [], highest_rank: [], faults: [], spw: [], aces: [], victory: [], elo: [], rank: [], victories: []};
-var statJames = {wins: [], peak_elo: [], highest_rank: [], faults: [], spw: [], aces: [], victory: [], elo: [], rank: [], victories: []};
-var statLuke = {wins: [], peak_elo: [], highest_rank: [], faults: [], spw: [], aces: [], victory: [], elo: [], rank: [], victories: []};
-var statNicky = {wins: [], peak_elo: [], highest_rank: [], faults: [], spw: [], aces: [], victory: [], elo: [], rank: [], victories: []};
+// function calculate(P1, P2, T1, T2, P1S, P2S, gameName) {
+// 	var change1 = calcChangeA(P1.elo, P2.elo, T1, T2, P1.elo);
+// 	var change2 = calcChangeB(P1.elo, P2.elo, T1, T2, P2.elo);
+// 	if (change1 > 200) {
+// 		change1 = 200;
+// 	}
+// 	if (change2 > 200 ) {
+// 		change2 = 200;
+// 	}
+// 	if (change1 < -200) {
+// 		change1 = -200;
+// 	}
+// 	if (change2 < -200) {
+// 		change2 = -200;
+// 	}
+// 	P1.elo += change1;
+// 	P2.elo += change2;
 
-var peter = {rank: "???", name: "Peter Langendorf", elo: 1000, url: "peter", highest_rank: "???", wins: 0, losses: 0, peak_elo: 1000, faults : 0, spw : 0, aces : 0, victory : [0, 1], stat : statPeter};
-var mathew = {rank: "???", name: "Mathew Ala", elo: 1000, url: "mathew", highest_rank: "???", wins: 0, losses: 0, peak_elo: 1000, faults : 0, spw : 0, aces : 0, victory : [0, 1], stat : statMathew};
-var tyler = {rank: "???", name: "Tyler Cummins", elo: 1000, url: "tyler", highest_rank: "???", wins: 0, losses: 0, peak_elo: 1000, faults : 0, spw : 0, aces : 0, victory : [0, 1], stat : statTyler};
-var william = {rank: "???", name: "William Mondello", elo: 1000, url: "william", highest_rank: "???", wins: 0, losses: 0, peak_elo: 1000, faults : 0, spw : 0, aces : 0, victory : [0, 1], stat : statWilliam};
-var james = {rank: "???", name: "James Aloi", elo: 1000, url: "james", highest_rank: "???", wins: 0, losses: 0, peak_elo: 1000, faults : 0, spw : 0, aces : 0, victory : [0, 1], stat : statJames};
-var luke = {rank: "???", name: "Luke Pilaud", elo: 1000, url: "luke", highest_rank: "???", wins: 0, losses: 0, peak_elo: 1000, faults : 0, spw : 0, aces : 0, victory : [0, 1], stat : statLuke};
-var nicky = {rank: "???", name: "Nicky", elo: 1000, url: "nicky", highest_rank: "???", wins: 0, losses: 0, peak_elo: 1000, faults : 0, spw : 0, aces : 0, victory : [0, 1], stat : statNicky};
+// 	if (P1.elo > P1.peak_elo) {
+// 		P1.peak_elo = P1.elo;
+// 	}
+// 	if (P2.elo > P2.peak_elo) {
+// 		P2.peak_elo = P2.elo;
+// 	}
+// 	people.sort((a, b) => b.elo - a.elo);
+// 	people.forEach((person, index) => {
+// 		person.rank = index + 1;
+// 	});
+// 	if (P1.highest_rank === "???") {
+// 		P1.highest_rank = P1.rank;
+// 	}
+// 	if (P2.highest_rank === "???") {
+// 		P2.highest_rank = P2.rank;
+// 	}
+// 	if (P1.rank < P1.highest_rank) {
+// 		P1.highest_rank = P1.rank;
+// 	}
+// 	if (P2.rank < P2.highest_rank) {
+// 		P2.highest_rank = P2.rank;
+// 	}
+// 	if (T1 > T2) { //P1 wins!
+// 		P1.wins++;
+// 		P2.losses++;
 
-var people = [peter, mathew, tyler, william, james, luke, nicky];
+// 		updateRecent(P1.stat.wins, 1);
+// 		updateRecent(P2.stat.wins, 0);
+// 		updateRecent(P1.stat.victory, [T1, T2]);
+// 		if (T1/T2 > P1.victory[0] / P1.victory[1]) {
+// 			P1.victory = [T1, T2];
+// 			P1.bestAgainst = P2.name;
+// 		}
+// 		P1.stat.victories.push([T1, T2]);
+// 	} else { //P2 wins!
+// 		P1.losses++;
+// 		P2.wins++;
 
-const colors = ["#047824", "#44ce1b", "#bbdb44", "#f7e379", "#f2a134", "#e51f1f", "#8b0000"];
+// 		updateRecent(P1.stat.wins, 0);
+// 		updateRecent(P2.stat.wins, 1);
+// 		updateRecent(P2.stat.victory, [T2, T1]);
+// 		if (T2/T1 > P2.victory[0] / P2.victory[1]) {
+// 			P2.victory = [T2, T1];
+// 			P2.bestAgainst = P1.name;
+// 		}
+// 		P2.stat.victories.push([T2, T1]);
+// 	}
+// 	updateRecent(P1.stat.peak_elo, P1.elo);
+// 	updateRecent(P2.stat.peak_elo, P2.elo);
+// 	updateRecent(P1.stat.highest_rank, P1.rank);
+// 	updateRecent(P2.stat.highest_rank, P2.rank);
 
-var recentGames = [];
+// 	P1.stat.elo.push(P1.elo);
+// 	P2.stat.elo.push(P2.elo);
+// 	P1.stat.rank.push(P1.rank);
+// 	P2.stat.rank.push(P2.rank);
 
-function negpos(num) {
-	if (num > 0) {
-		return 1;
-	} else if (num < 0) {
-		return -1;
-	}
-	return 0;
-}
-function getTeamAverage(elo1, elo2) {
-	return (elo1+elo2) / 2;
-}
-
-function calcChangeA(P1, P2, T1, T2, X) {
-	return negpos(
-		(X/P1) * (P1 / P2) * (P2 * T1 - P1 * T2)
-	) * Math.sqrt(Math.abs(
-		(P1/P2) * (P2 * T1 - P1 * T2)
-	))
-}
-function calcChangeB(P1, P2, T1, T2, X) {
-	return negpos(
-		(X/P2) * (P2 / P1) * (P1 * T2 - P2 * T1)
-	) * Math.sqrt(Math.abs(
-		(P2/P1) * (P1 * T2 - P2 * T1)
-	))
-}
-function calculate(P1, P2, T1, T2, P1S, P2S, gameName) {
-	var change1 = calcChangeA(P1.elo, P2.elo, T1, T2, P1.elo);
-	var change2 = calcChangeB(P1.elo, P2.elo, T1, T2, P2.elo);
-	if (change1 > 200) {
-		change1 = 200;
-	}
-	if (change2 > 200 ) {
-		change2 = 200;
-	}
-	if (change1 < -200) {
-		change1 = -200;
-	}
-	if (change2 < -200) {
-		change2 = -200;
-	}
-	P1.elo += change1;
-	P2.elo += change2;
-
-	if (P1.elo > P1.peak_elo) {
-		P1.peak_elo = P1.elo;
-	}
-	if (P2.elo > P2.peak_elo) {
-		P2.peak_elo = P2.elo;
-	}
-	people.sort((a, b) => b.elo - a.elo);
-	people.forEach((person, index) => {
-		person.rank = index + 1;
-	});
-	if (P1.highest_rank === "???") {
-		P1.highest_rank = P1.rank;
-	}
-	if (P2.highest_rank === "???") {
-		P2.highest_rank = P2.rank;
-	}
-	if (P1.rank < P1.highest_rank) {
-		P1.highest_rank = P1.rank;
-	}
-	if (P2.rank < P2.highest_rank) {
-		P2.highest_rank = P2.rank;
-	}
-	if (T1 > T2) { //P1 wins!
-		P1.wins++;
-		P2.losses++;
-
-		updateRecent(P1.stat.wins, 1);
-		updateRecent(P2.stat.wins, 0);
-		updateRecent(P1.stat.victory, [T1, T2]);
-		if (T1/T2 > P1.victory[0] / P1.victory[1]) {
-			P1.victory = [T1, T2];
-		}
-		P1.stat.victories.push([T1, T2]);
-	} else { //P2 wins!
-		P1.losses++;
-		P2.wins++;
-
-		updateRecent(P1.stat.wins, 0);
-		updateRecent(P2.stat.wins, 1);
-		updateRecent(P2.stat.victory, [T2, T1]);
-		if (T2/T1 > P2.victory[0] / P2.victory[1]) {
-			P2.victory = [T2, T1];
-		}
-		P2.stat.victories.push([T2, T1]);
-	}
-	updateRecent(P1.stat.peak_elo, P1.elo);
-	updateRecent(P2.stat.peak_elo, P2.elo);
-	updateRecent(P1.stat.highest_rank, P1.rank);
-	updateRecent(P2.stat.highest_rank, P2.rank);
-
-	P1.stat.elo.push(P1.elo);
-	P2.stat.elo.push(P2.elo);
-	P1.stat.rank.push(P1.rank);
-	P2.stat.rank.push(P2.rank);
-
-	P1.faults += P1S[0];
-    P2.faults += P2S[0];
-    P1.spw += P1S[1];
-    P2.spw += P2S[1];
-	P1.aces += P1S[2];
-	P2.aces += P2S[2];
+// 	P1.faults += P1S[0];
+//     P2.faults += P2S[0];
+//     P1.spw += P1S[1];
+//     P2.spw += P2S[1];
+// 	P1.aces += P1S[2];
+// 	P2.aces += P2S[2];
 
 
-	updateRecent(P1.stat.faults, P1S[0]);
-	updateRecent(P2.stat.faults, P2S[0]);
-	updateRecent(P1.stat.spw, P1S[1]);
-	updateRecent(P2.stat.spw, P2S[1]);
-	updateRecent(P1.stat.aces, P1S[2]);
-	updateRecent(P2.stat.aces, P2S[2]);
+// 	updateRecent(P1.stat.faults, P1S[0]);
+// 	updateRecent(P2.stat.faults, P2S[0]);
+// 	updateRecent(P1.stat.spw, P1S[1]);
+// 	updateRecent(P2.stat.spw, P2S[1]);
+// 	updateRecent(P1.stat.aces, P1S[2]);
+// 	updateRecent(P2.stat.aces, P2S[2]);
 
-	updateRecent(recentGames, [P1, P2, T1, T2, P1S, P2S, gameName]);
-}
+// 	updateRecent(recentGames, [P1, P2, T1, T2, P1S, P2S, gameName]);
+// }
 
 function updateRecent(array, value) {
 	if (array.length === 7) {
@@ -216,7 +170,7 @@ faults: 1
 11/6/24
 */
 
-calculate(peter, william, 11, 8, [1, 6, 0], [0, 4, 0], "lang.mond.11.6.24");
+calculateElo(peter, william, 11, 8, [1, 6, 0], [0, 4, 0], "lang.mond.11.6.24");
 
 /*
 james:
@@ -238,7 +192,7 @@ faults: 0
 11/6/24
 */
 
-calculate(peter, james, 11, 7, [0, 7, 0], [1, 4, 0], "lang.aloi.11.6.24");
+calculateElo(peter, james, 11, 7, [0, 7, 0], [1, 4, 0], "lang.aloi.11.6.24");
 
 /*
 William: wins toss
@@ -260,7 +214,7 @@ faults: 0
 11/6/24
 */
 
-calculate(peter, william, 11, 3, [0, 8, 0], [0, 2, 0], "lang.mond.11.7.24");
+calculateElo(peter, william, 11, 3, [0, 8, 0], [0, 2, 0], "lang.mond.11.7.24");
 
 /*
 James: wins toss
@@ -282,7 +236,7 @@ faults: 0
 11/6/24
 */
 
-calculate(peter, james, 11, 3, [0, 7, 0], [0, 1, 0], "lang.aloi.11.7.24");
+calculateElo(peter, james, 11, 3, [0, 7, 0], [0, 1, 0], "lang.aloi.11.7.24");
 
 /*
 Nicky: 
@@ -304,7 +258,7 @@ faults: 0
 11/6/24
 */
 
-calculate(peter, nicky, 11, 2, [0, 9, 0], [0, 1, 0], "lang.nicky.11.7.24");
+calculateElo(peter, nicky, 11, 2, [0, 9, 0], [0, 1, 0], "lang.nicky.11.7.24");
 
 /*
 Luke: 
@@ -326,7 +280,7 @@ faults: 0
 11/6/24
 */
 
-calculate(peter, luke, 11, 0, [0, 10, 0], [0, 0, 0], "lang.luke.11.7.24");
+calculateElo(peter, luke, 11, 0, [0, 10, 0], [0, 0, 0], "lang.luke.11.7.24");
 
 /*
 Mathew: 
@@ -347,7 +301,7 @@ faults: 2
 ussr points: 2
 */
 
-calculate(mathew, peter, 21, 14, [1, 11, 0], [2, 6, 0], "lang.alla.11.18.24");
+calculateElo(mathew, peter, 21, 14, [1, 11, 0], [2, 6, 0], "lang.alla.11.18.24");
 
 var page = document.currentScript.getAttribute("page");
 var player = null;
@@ -360,8 +314,6 @@ if (page === "index") {
 		document.getElementById("name" + person.rank).href = "people/" +person.url+".html";
 		document.getElementById("elo" + person.rank).innerText = person.elo;
 	});
-
-	document.getElementById("gamearchive1").innerText = recentGames[0][6];
 } else {
 	people.forEach(person => {
 		if (page == person.url) {
@@ -399,6 +351,7 @@ if (page === "index") {
 
 	document.getElementById("recentVictory").innerText = arrayDiff(player.stat.victory);
 	document.getElementById("allTimeVictory").innerText = player.victory;
+	document.getElementById("allTimeVictory").title = "Against " + player.bestAgainst;
 	document.getElementById("averageVictory").innerText = arrayAvg(player.stat.victories);
 
 	people.forEach(person => {

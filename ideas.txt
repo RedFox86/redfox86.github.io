@@ -3,3 +3,5 @@ put picture of the ping pong room in the background
 add suckers serve % statistic
 add time as #1
 keep track of toss
+include who best game was against (done)
+add tab for games with the selected person
